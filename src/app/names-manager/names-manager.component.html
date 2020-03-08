@@ -1,0 +1,25 @@
+<div fxLayoutAlign="center center" fxLayout="row">
+    
+</div>
+
+<div class="person-container" fxLayoutAlign="center center" fxLayoutGap="1px grid">
+    <div *ngIf="allowAdd">
+        <app-add-member-card>
+        </app-add-member-card>
+    </div>
+    <app-member-card (onDataChange)="this.changeStatus('Ariel Nowik', $event)" [deletable]="true" [dataUpdater]="this.getUpdater('Ariel Nowik')" name="Ariel Nowik">
+    </app-member-card>
+    <app-member-card (onDataChange)="this.changeStatus('Dante Kieniguiel', $event)" [deletable]="true" [dataUpdater]="this.getUpdater('Dante Kieniguiel')" name="Dante Kieniguiel">
+    </app-member-card>
+    <app-member-card (onDataChange)="this.changeStatus('Franco Moriconi', $event)" [deletable]="true" [dataUpdater]="this.getUpdater('Franco Moriconi')" name="Franco Moriconi">
+    </app-member-card>
+    <app-member-card (onDataChange)="this.changeStatus('Franco Moriconi', $event)" [deletable]="true" [dataUpdater]="this.getUpdater('Franco Moriconi')" name="Franco Moriconi">
+    </app-member-card>
+    <app-member-card (onDataChange)="this.changeStatus('Franco Moriconi', $event)" [deletable]="true" [dataUpdater]="this.getUpdater('Franco Moriconi')" name="Franco Moriconi">
+    </app-member-card>
+    <app-member-card (onDataChange)="this.changeStatus('Franco Moriconi', $event)" [deletable]="true" [dataUpdater]="this.getUpdater('Franco Moriconi')" name="Franco Moriconi">
+    </app-member-card>
+    <app-member-card (onDataChange)="this.changeStatus('Franco Moriconi', $event)" [deletable]="true" [dataUpdater]="this.getUpdater('Franco Moriconi')" name="Franco Moriconi">
+    </app-member-card>
+    
+</div>

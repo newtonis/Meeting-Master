@@ -1,0 +1,102 @@
+  <div class="days">
+    <div class="day">
+      <!-- This leaves a blank space at the start of the first column -->
+      <div class="hour-name" fxLayoutAlign="center center">
+        #
+      </div>
+      <div
+        class="subject-hour"
+        fxLayoutAlign="center center"
+        *ngFor="let hour of hoursInteger;
+        let i = index">
+        <div class="hourText">{{ hour }} - {{nextHoursInteger[i]}}</div>
+      </div>
+    </div>
+    <!-- absolute https://dzone.com/articles/css-position-relative-vs-position-absolute -->
+    <div class="day" *ngFor="let day of days; let i = index">
+      <div class="day-name" fxLayoutAlign="center center">
+        {{ day }}
+      </div>
+      <div class="timeblockArea" (mouseleave)="mouseIsNotOnCalendar()">
+        <div class="subject" *ngFor="let hour of this.hoursInteger, let a = index" fxLayoutAlign="center center">
+          <div *ngIf="!areSubjectsShown">
+            <!-- Using a*2 as index for periodButtons bc not only are integerHours taken into account, but also hours such as 18:30, so the amount of hours in the array are doubled -->
+            <button mat-raised-button class="period-button" (mousedown)="startTogglePeriodMarker(day, a)" (mouseenter)="inTogglePeriodMarker(day, a)" (mouseup)="endTogglePeriodMarker(day, a)" [color]="getButtonColor(day, a)">
+
+            </button>
+          </div>
+        </div>
+        <div *ngIf="areSubjectsShown">
+          <div *ngFor="let subject of this.subjectsOfDay[day]">
+            <div class="subjectRelative" fxLayoutAlign="center center" [style.background-color]="subject.color" [style.height.px]="subject.height" [style.top.px]="subject.startPos">
+              {{ subject.name }} <br> Comisión {{ subject.commission }} <br> {{ subject.location }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <!--
+  <div class="lateral-bar">
+    <div class="free-period-marker" >
+      <button mat-raised-button (click)="toggleCalendarState()" [color]="buttonColor" >
+        Modo elegir espacios libres: {{ calendarButtonText }}
+      </button>
+    </div>
+  </div>
+TERMINA ACAAAA
+ <div class="lateral-bar">
+    <h1>Materias</h1>
+    <div class="subject-list" *ngFor="let subj of subjectList">
+      <h3>
+        {{ subj.subject.name }}
+      </h3>
+      <mat-checkbox class="selected-comission" [(ngModel)]="subj.checked">
+        {{ subj.subject.commissionName }}
+      </mat-checkbox>
+      <button class="img-container" mat-button-toggle (click)="deleteComissionFromList(subj.subject)"><img class="delete" src="/assets/img/delete-icon.svg"></button>
+    </div>
+    <mat-form-field class="subject-chooser">
+      <input type="text" [disabled]="subjectChooserDisabled" placeholder="Agregar materia" matInput [matAutocomplete]="auto" (input)="onSubjectChooserChange($event)" [(ngModel)]="subjectChooserValue">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="subjectSelected($event)">
+          <mat-option *ngFor="let option of filteredOptions" [value]="option">
+            {{ option.name }}
+          </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</div>-->
+    <!-- Switch subjectList with selectedSchedule here to see its behaviour when adding/removing subjects -->
+    <!--
+      <mat-icon svgIcon="delete" aria-hidden="false">delete</mat-icon>
+      <div class="lateral-bar">
+  </div>
+    <div class="subject-list" *ngFor="let subject of subjectList">
+      {{ subject.name }}
+      <mat-checkbox class="selected-comission" [(ngModel)]="subject.checked" (change)="switchSubjectState(subject)">
+        {{ subject.commissionName }}
+      </mat-checkbox>
+    </div>
+    -->
+    <!--
+    <mat-form-field class="subject-chooser">
+      <input type="text" placeholder="Agregar materia" matInput [matAutocomplete]="auto" (input)="onSubjectChooserChange($event)" [(ngModel)]="subjectChooserValue">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="subjectSelected($event)">
+        <mat-option *ngFor="let option of filteredOptions" [value]="option">
+          {{ option.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+        <div class="subject-chooser">
+      <mat-form-field>
+        <input type="text" placeholder="Agregar materia" matInput [matAutocomplete]="auto" (input)="onSubjectChooserChange($event)" [(ngModel)]="subjectChooserValue">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="subjectSelected($event)">
+            <mat-option *ngFor="let option of filteredOptions" [value]="option">
+              {{ option.name }}
+            </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    -->

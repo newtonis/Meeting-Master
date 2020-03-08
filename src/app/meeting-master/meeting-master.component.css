@@ -1,0 +1,14 @@
+
+.meeting-master{
+    padding:10px;
+    background:#e3f2fd;
+    min-height:100%;
+}
+:host {
+    width:100%;
+    height:100%;
+}
+.tab-group{
+    height: 100%;
+    text-align: center;
+}

@@ -1,0 +1,41 @@
+.member-card{
+    margin:1px;
+    padding:30px;
+    background-color: #b2ebf2;
+    width: 200px;
+    text-align: center;
+}
+.member-card:hover{
+    background-color: #c8e6c9;
+}
+.member-card-selected{
+    margin:1px;
+    padding:30px;
+    border: 1px solid #000000;
+    background-color: #ffe57f;
+    width: 200px;
+    text-align: center;
+}
+:host{
+    font-size:20px;
+}
+
+@media only screen and (max-width: 959px) {
+    :host{
+        font-size:12px;
+    }
+    .member-card, .member-card-selected{
+        width: 100px;
+        padding:15px;
+    }
+
+}
+@media only screen and (min-width: 960px) and (max-width: 1279px) {
+    :host{
+        font-size:15px;
+    }
+    .member-card, .member-card-selected{
+        width: 150px;
+        padding:15px;
+    }
+}

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { PeopleTimetableManagerService } from './people-timetable-manager.service';
+
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'MeetingMaster';
+  constructor(private peopleTimeTableService: PeopleTimetableManagerService){
+    peopleTimeTableService.startDataHandler("IEEE-Timetable");
+  }
 }

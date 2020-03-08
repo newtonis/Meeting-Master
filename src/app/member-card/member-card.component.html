@@ -1,0 +1,20 @@
+<div *ngIf="!selected" class="member-card" (click)="onSelected()"  fxLayoutAlign="center center" fxLayout="row">
+    <div>
+        {{name}}
+    </div>
+    <div *ngIf="deletable">
+        <button (click)="deleteCalled()" mat-icon-button aria-label="Example icon-button with a heart icon">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>
+<div *ngIf="selected" class="member-card-selected" (click)="onSelected()" fxLayoutAlign="center center" fxLayout="row">
+    <div>
+        {{name}} 
+    </div>
+    <div *ngIf="deletable">
+        <button (click)="deleteCalled()" mat-icon-button aria-label="Example icon-button with a heart icon">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>
