@@ -15,17 +15,22 @@ export class NamesManagerComponent implements OnInit {
   @Output() deleteCalled: EventEmitter<string> = new EventEmitter<string>();
   @Output() addCalled: EventEmitter<string> = new EventEmitter<string>();
   @Output() newSelectedItem: EventEmitter<string> = new EventEmitter<string>();
+  @Output() updateSelectedItems: EventEmitter<Person[]> = new EventEmitter<Person[]>();
 
   dataUpdater: { [id: string]: BehaviorSubject<boolean>; } = {}
   dataStatus: {[id: string]: boolean} = {}
 
+  dataByName:  { [id: string]: Person } = {}; 
+  
   constructor() { }
 
   ngOnInit(): void {
-    /*this.dataProvider.subscribe(data=>{
-      console.log(`new data`);
-      console.log(data);
-    });*/
+    this.dataProvider.subscribe((data: Person[])=>{
+      this.dataByName = {};
+      for (var person in data){
+        this.dataByName[data[person].name] = data[person];
+      }
+    });
   }
   changeStatus(name: string, status: boolean){
     if (this.oneAtATime){
@@ -40,7 +45,7 @@ export class NamesManagerComponent implements OnInit {
     if (status == true){
       this.newSelectedItem.emit(name);
     }
-    
+    this.sendSelectedItems();
   }
   addPerson(name: string){
     this.dataStatus[name] = false;
@@ -56,5 +61,14 @@ export class NamesManagerComponent implements OnInit {
       this.dataUpdater[name] = new BehaviorSubject<boolean>(false);
     }
     return this.dataUpdater[name];
+  }
+  sendSelectedItems() : void{
+    var data: Person[] = [];
+    for (var item in this.dataStatus){
+      if (this.dataStatus[item]){
+        data.push(this.dataByName[item]);
+      }
+    }
+    this.updateSelectedItems.emit(data);
   }
 }

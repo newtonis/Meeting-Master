@@ -7,6 +7,11 @@
             <mat-icon>delete</mat-icon>
         </button>
     </div>
+    <div *ngIf="!deletable">
+        <button mat-icon-button aria-label="Example icon-button with a heart icon">
+            <mat-icon>person_pin</mat-icon>
+        </button>
+    </div>
 </div>
 <div *ngIf="selected" (click)="onSelected()" class="member-card-selected"  fxLayoutAlign="center center" fxLayout="row">
     <div >
@@ -15,6 +20,11 @@
     <div *ngIf="deletable">
         <button (click)="deleteCalled()" mat-icon-button aria-label="Example icon-button with a heart icon">
             <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+    <div *ngIf="!deletable">
+        <button mat-icon-button aria-label="Example icon-button with a heart icon">
+            <mat-icon>person_pin</mat-icon>
         </button>
     </div>
 </div>

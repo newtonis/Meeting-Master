@@ -14,6 +14,6 @@
     <!--<div *ngFor="let person of (dataProvider | async)">
         
     </div>-->
-    <app-member-card *ngFor="let person of (dataProvider | async)" (onDelete)="this.deletePerson(person.name)" (onDataChange)="this.changeStatus(person.name, $event)" [deletable]="true" [dataUpdater]="this.getUpdater(person.name)" name={{person.name}}>
+    <app-member-card *ngFor="let person of (dataProvider | async)" (onDelete)="this.deletePerson(person.name)" (onDataChange)="this.changeStatus(person.name, $event)" [deletable]="allowAdd" [dataUpdater]="this.getUpdater(person.name)" name={{person.name}}>
     </app-member-card>
 </div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TimetablesServiceService } from '../timetables-service.service';
 import { PeopleTimetableManagerService } from '../people-timetable-manager.service';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { Person, Timeblock } from '../materia';
+import { Person, Timeblock, intersectTimeblock } from '../materia';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
@@ -41,6 +41,7 @@ export class MeetingMasterComponent implements OnInit {
   addPerson(name: string){
  
     console.log(`add person ${name}`);
+
     this.peopleTimeTableManager.addPerson(name);
 
   }
@@ -89,6 +90,13 @@ export class MeetingMasterComponent implements OnInit {
       console.log("erasing all");
 
     }*/
+  }
+
+  updateSelectedItems(selected: Person[]){
+    console.log("selected = ");
+    console.log(selected);
+    this.timeblockIntersectionUpdater.next(intersectTimeblock(selected));
+  
   }
 
 }

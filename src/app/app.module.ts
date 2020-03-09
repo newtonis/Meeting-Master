@@ -18,6 +18,12 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { firebaseConfig } from './secrets';
+import { RouterModule, Routes } from '@angular/router';
+import { MainComponent } from './main/main.component';
+
+const routes: Routes = [
+  { path: ':id', component: MainComponent}
+];
 
 @NgModule({
   declarations: [
@@ -27,9 +33,11 @@ import { firebaseConfig } from './secrets';
     CalendarComponent,
     NamesManagerComponent,
     AddMemberCardComponent,
+    MainComponent,
     
   ],
   imports: [
+    RouterModule.forRoot(routes),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,

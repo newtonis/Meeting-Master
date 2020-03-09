@@ -2,12 +2,12 @@
     <mat-tab label="Meeting" >
         <div class="meeting-master" fxLayoutAlign="center center" fxLayout.lt-lg="column">
             <div [fxFlex.gt-md]="50" class="calendar-container">
-                <app-names-manager (addCalled)="addPerson($event)"  [dataProvider]="dataProvider" [oneAtATime]="false">
+                <app-names-manager (updateSelectedItems)="updateSelectedItems($event)"  [dataProvider]="dataProvider" [oneAtATime]="false">
 
                 </app-names-manager>
             </div>
             <div [fxFlex.gt-md]="50" class="calendar-container" fxLayoutAlign="center center" fxLayout="row">
-                <app-calendar [updatesOnTimetable]="timeblockIntersectionUpdater.asObservable()" [updatesOnTimetable]="tableTimeblockUpdater.asObservable()" [areSubjectsShown]="true">
+                <app-calendar myColor="green" [updatesOnTimetable]="timeblockIntersectionUpdater.asObservable()" [areSubjectsShown]="false">
                     
                 </app-calendar>
             </div>

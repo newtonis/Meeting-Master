@@ -144,11 +144,11 @@ export function generateTimeBlockFromData(day: string, startTime: string, endTim
   return timeblock;
 }
 function generateEmptyOnes(length: number){
-  var emptyZeroes : boolean[] = [];
+  var emptyOnes : boolean[] = [];
   for (var i = 0;i < length;i++){
-    emptyZeroes.push(true);
+    emptyOnes.push(true);
   }
-  return emptyZeroes;
+  return emptyOnes;
 }
 export function intersectTimeblock(people : Person[]) : Timeblock[]{
  
@@ -173,9 +173,9 @@ export function intersectTimeblock(people : Person[]) : Timeblock[]{
 
   // generate again the timeblock
 
-  var timeblocks: Timeblock[];
+  var timeblocks: Timeblock[] = [];
 
-  for (let day in ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]){
+  for (let day of ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]){
     var startPosition: number = -1;
 
     for (let hour = 0;hour < 24;hour++){

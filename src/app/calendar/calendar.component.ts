@@ -62,7 +62,7 @@ export class CalendarComponent implements OnInit {
   @Input() updatesOnTimetable : Observable<TimeblockOriginal[]>; // desde afuera actualizar timetable
   @Output() onTimetableUpdated : EventEmitter<TimeblockOriginal[]> = new EventEmitter<TimeblockOriginal[]>(); // mandar info afuera de que el timetable fue actualizado
   @Input() blockEdit: boolean = true;
-  @Input() color : string = "red";
+  @Input() myColor : string = "red";
 
   @Input() areSubjectsShown: boolean;
 
@@ -512,14 +512,16 @@ export class CalendarComponent implements OnInit {
   }
 
   getButtonColor(day: string, indexHour: number):string {
-    if(this.periodButtonsColorState[day][indexHour])
-      if (this.color == "green"){
+    if(this.periodButtonsColorState[day][indexHour]){
+      if (this.myColor == "green"){
         return "success-green";
       }else{
         return "success-red";
       }
-    else
+
+    }else{
       return "none";
+    }
   }
 
   startTogglePeriodMarker(day: string, indexHour: number) {
