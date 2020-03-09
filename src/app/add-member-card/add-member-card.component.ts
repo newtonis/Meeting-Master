@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-add-member-card',
@@ -6,12 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-member-card.component.css']
 })
 export class AddMemberCardComponent implements OnInit {
+  @Output() onAddPerson: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
-  addPerson(){
-    
+  addPerson(name: string){
+    console.log(`add person ${name}`);
+    this.onAddPerson.emit(name);
   }
 }

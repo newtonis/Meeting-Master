@@ -1,5 +1,5 @@
-<div *ngIf="!selected" class="member-card" (click)="onSelected()"  fxLayoutAlign="center center" fxLayout="row">
-    <div>
+<div *ngIf="!selected" (click)="onSelected()" class="member-card"  fxLayoutAlign="center center" fxLayout="row">
+    <div  >
         {{name}}
     </div>
     <div *ngIf="deletable">
@@ -8,8 +8,8 @@
         </button>
     </div>
 </div>
-<div *ngIf="selected" class="member-card-selected" (click)="onSelected()" fxLayoutAlign="center center" fxLayout="row">
-    <div>
+<div *ngIf="selected" (click)="onSelected()" class="member-card-selected"  fxLayoutAlign="center center" fxLayout="row">
+    <div >
         {{name}} 
     </div>
     <div *ngIf="deletable">

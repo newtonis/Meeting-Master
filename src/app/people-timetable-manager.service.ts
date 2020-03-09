@@ -17,29 +17,30 @@ export class PeopleTimetableManagerService {
   }
 
   startDataHandler(collectionName: string){
+    console.log(`starting data handler on ${collectionName}`);
     this.collectionName = collectionName;
 
     this.afs.collection(this.collectionName).valueChanges().subscribe(data => {
-      var people: Person[];
-
+      /*console.log(`new data on collection arrived ${data}`);
+      console.log(data);*/
+      
+      var people: Person[] = [];
       for (const docName in data){
         var doc = data[docName];
 
         var timetableProcessed = [];
-        
         for (const timeblock in doc["timetable"]){
           timetableProcessed.push(
             generateTimeBlockFromData(
-              doc["timetable"]["day"],
-              doc["timetable"]["start"],
-              doc["timetable"]["end"]
+              doc["timetable"][timeblock]["day"],
+              doc["timetable"][timeblock]["start"],
+              doc["timetable"][timeblock]["end"]
             )
           );
         }
-
         people.push(
           {
-            id: docName,
+            id: doc["name"],
             name: doc["name"],
             timetable: timetableProcessed
           }
@@ -53,7 +54,8 @@ export class PeopleTimetableManagerService {
   }
 
   addPerson(name: string){
-    this.afs.collection(this.collectionName).add({
+    console.log(`adding ${name}`);
+    this.afs.collection(this.collectionName).doc(name).set({
       name: name,
       timetable: []
     }).then(data => {
@@ -66,6 +68,8 @@ export class PeopleTimetableManagerService {
     })
   }
   updatePerson(id: string, horarios: Timeblock[]){
+    console.log(horarios);
+    
     var horariosProcesados = [];
 
     for (var horario of horarios){

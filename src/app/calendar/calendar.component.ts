@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChildren, QueryList, ChangeDetectorRef, Input } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
 /*
 import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDropList } from '@angular/cdk/drag-drop';
 import { Observable } from 'rxjs';
@@ -10,7 +10,9 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { SubjectCommissions, Subject, Commission } from '../materia';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Timeblock } from '../algorithm/algorithm-object';
+import { Timeblock as TimeblockOriginal, generateTimeblockFromITimeblock } from '../materia';
 import { CalendarServiceService } from '../calendar-service.service';
+import { isThisSecond } from 'date-fns';
 
 /* "Dummy" datatypes to simulate obtained data through the algorithm */
 interface possibleSchedules {
@@ -57,9 +59,14 @@ interface SubjectList {
 
 export class CalendarComponent implements OnInit {
   @Input() subjectsComissions: Observable<SubjectCommissions[]>; // input de materias
+  @Input() updatesOnTimetable : Observable<TimeblockOriginal[]>; // desde afuera actualizar timetable
+  @Output() onTimetableUpdated : EventEmitter<TimeblockOriginal[]> = new EventEmitter<TimeblockOriginal[]>(); // mandar info afuera de que el timetable fue actualizado
+  @Input() blockEdit: boolean = true;
+  @Input() color : string = "red";
+
   @Input() areSubjectsShown: boolean;
 
-
+  
   /*schedules: possibleSchedules[] = [
     {
       subjects: [
@@ -232,6 +239,30 @@ export class CalendarComponent implements OnInit {
         this.isLoading = false;
       });
     }
+
+
+    this.updatesOnTimetable.subscribe((data: TimeblockOriginal[]) => {
+      // update all values according database
+      
+      for (let day of this.days) {
+        this.periodButtonsColorState[day] = [];
+        for (let hour of this.hoursInteger) {
+          this.periodButtonsColorState[day].push(false);
+        }
+      }
+
+      for (let blockId in data){
+        var block : TimeblockOriginal = data[blockId];
+        console.log("applying block");
+        console.log(block);
+        for (let i = block.start.hours;i < block.end.hours;i++){
+          this.periodButtonsColorState[block.day][i-8] = true;
+        }
+
+      }
+
+    });
+
   }
 
   setLoading(){
@@ -482,25 +513,18 @@ export class CalendarComponent implements OnInit {
 
   getButtonColor(day: string, indexHour: number):string {
     if(this.periodButtonsColorState[day][indexHour])
-      return "success";
+      if (this.color == "green"){
+        return "success-green";
+      }else{
+        return "success-red";
+      }
     else
       return "none";
   }
 
   startTogglePeriodMarker(day: string, indexHour: number) {
-    this.isMouseClicked = true;
-    if (!this.periodButtonsColorState[day][indexHour]) {
-      this.periodButtonsColorState[day][indexHour] = true;
-      this.updatePeriodBlock("ADD");
-    }
-    else {
-      this.periodButtonsColorState[day][indexHour] = false;
-      this.updatePeriodBlock("REMOVE");
-    }
-  }
-
-  inTogglePeriodMarker(day: string, indexHour: number) {
-    if (this.isMouseClicked) {
+    if (!this.blockEdit){
+      this.isMouseClicked = true;
       if (!this.periodButtonsColorState[day][indexHour]) {
         this.periodButtonsColorState[day][indexHour] = true;
         this.updatePeriodBlock("ADD");
@@ -512,9 +536,43 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  inTogglePeriodMarker(day: string, indexHour: number) {
+    if (!this.blockEdit){
+      if (this.isMouseClicked) {
+        if (!this.periodButtonsColorState[day][indexHour]) {
+          this.periodButtonsColorState[day][indexHour] = true;
+          this.updatePeriodBlock("ADD");
+        }
+        else {
+          this.periodButtonsColorState[day][indexHour] = false;
+          this.updatePeriodBlock("REMOVE");
+        }
+      }
+    }
+  }
+
   endTogglePeriodMarker(day: string, indexHour: number) {
-    this.isMouseClicked = false;
-    this.calendarService.setTimeblocks(this.periodBlocks);
+    if (!this.blockEdit){
+      this.isMouseClicked = false;
+      this.calendarService.setTimeblocks(this.periodBlocks);
+
+      var ans: TimeblockOriginal[]  = [];
+
+      for (var block of this.periodBlocks){
+        console.log("block");
+        console.log(block);
+
+        var value : TimeblockOriginal = generateTimeblockFromITimeblock(block);
+        
+        console.log("timeblock");
+        console.log(value);
+        
+        ans.push(value);
+      }
+
+      this.onTimetableUpdated.next(ans);
+    }
+    
     // console.log(this.periodBlocks);  <-- Used to track this.periodBlocks content
   }
 

@@ -1,13 +1,13 @@
-<mat-tab-group mat-stretch-tabs class="tab-group">
-    <mat-tab label="Meeting">
+<mat-tab-group mat-stretch-tabs class="tab-group" (selectedTabChange)="tabChanged($event)"> 
+    <mat-tab label="Meeting" >
         <div class="meeting-master" fxLayoutAlign="center center" fxLayout.lt-lg="column">
-            <div [fxFlex.gt-md]="50" >
-                <app-names-manager [oneAtATime]="false">
+            <div [fxFlex.gt-md]="50" class="calendar-container">
+                <app-names-manager (addCalled)="addPerson($event)"  [dataProvider]="dataProvider" [oneAtATime]="false">
 
                 </app-names-manager>
             </div>
             <div [fxFlex.gt-md]="50" class="calendar-container" fxLayoutAlign="center center" fxLayout="row">
-                <app-calendar [areSubjectsShown]="true">
+                <app-calendar [updatesOnTimetable]="timeblockIntersectionUpdater.asObservable()" [updatesOnTimetable]="tableTimeblockUpdater.asObservable()" [areSubjectsShown]="true">
                     
                 </app-calendar>
             </div>
@@ -15,13 +15,13 @@
     </mat-tab>
     <mat-tab label="Update">
         <div class="meeting-master" fxLayoutAlign="center center" fxLayout.lt-lg="column">
-            <div [fxFlex.gt-md]="50" >
-                <app-names-manager [allowAdd]="true" [oneAtATime]="true">
+            <div [fxFlex.gt-md]="50" class="calendar-container">
+                <app-names-manager (newSelectedItem)="updateCalendarContent($event)" (addCalled)="addPerson($event)" (deleteCalled)="removePerson($event)" [dataProvider]="dataProvider" [allowAdd]="true" [oneAtATime]="true">
 
                 </app-names-manager>
             </div>
             <div [fxFlex.gt-md]="50" class="calendar-container" fxLayoutAlign="center center" fxLayout="row">
-                <app-calendar [areSubjectsShown]="false">
+                <app-calendar [blockEdit]="false" (onTimetableUpdated)="updatedCalendarFromUser($event)" [updatesOnTimetable]="tableTimeblockUpdater.asObservable()" [areSubjectsShown]="false">
                     
                 </app-calendar>
             </div>

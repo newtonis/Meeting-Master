@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { firebaseConfig } from './secrets';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
   ],
   imports: [
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

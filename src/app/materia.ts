@@ -122,22 +122,85 @@ export function generateDateFromHours(hours: number, minutes: number) : string{
   var date: Date = new Date();
   date.setMinutes(minutes);
   date.setHours(hours);
-  return format(date, "hh:mm");
+  return format(date, "H:mm");
 }
 export function generateTimeBlockFromData(day: string, startTime: string, endTime: string) : Timeblock{
-  var start: Date = parse(startTime, "hh:mm", new Date());
-  var end: Date = parse(endTime, "hh:mm", new Date());
+  var startDate: Date = parse(startTime, "H:mm", new Date());
+  var endDate: Date = parse(endTime, "H:mm", new Date());
 
+  
   var timeblock : Timeblock = {
     day: day,
     start: {
-      minutes: start.getMinutes(),
-      hours: start.getHours()
+      minutes: startDate.getMinutes(),
+      hours: startDate.getHours()
     },
     end: {
-      minutes: end.getMinutes(),
-      hours: end.getHours()
+      minutes: endDate.getMinutes(),
+      hours: endDate.getHours()
     }
   }
+  console.log(timeblock);
   return timeblock;
+}
+function generateEmptyOnes(length: number){
+  var emptyZeroes : boolean[] = [];
+  for (var i = 0;i < length;i++){
+    emptyZeroes.push(true);
+  }
+  return emptyZeroes;
+}
+export function intersectTimeblock(people : Person[]) : Timeblock[]{
+ 
+  // generating array
+  var timeArray : { [day: string] : Boolean[] } =
+  {
+    "Lunes": generateEmptyOnes(24),
+    "Martes": generateEmptyOnes(24),
+    "Miércoles": generateEmptyOnes(24),
+    "Jueves": generateEmptyOnes(24),
+    "Viernes": generateEmptyOnes(24),
+  };
+
+
+  for (let person in people){
+    for (let block in people[person].timetable){
+      for (let hour = people[person].timetable[block].start.hours; hour < people[person].timetable[block].end.hours;hour++){
+        timeArray[people[person].timetable[block].day][hour] = false;
+      }
+    }
+  }
+
+  // generate again the timeblock
+
+  var timeblocks: Timeblock[];
+
+  for (let day in ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"]){
+    var startPosition: number = -1;
+
+    for (let hour = 0;hour < 24;hour++){
+      
+      if(timeArray[day][hour] == true && (hour == 0 || timeArray[day][hour-1] == false)){
+        startPosition = hour;
+      }
+
+      if (timeArray[day][hour] == true && (hour == 23 || timeArray[day][hour+1] == false) ){
+        var nuevo: Timeblock = {
+          day: day,
+          start: {
+            hours:startPosition,
+            minutes:0
+          },
+          end:{
+            hours:hour+1,
+            minutes:0
+          }
+        };
+        timeblocks.push(nuevo);
+      }
+      
+    }
+  }
+
+  return timeblocks;
 }

@@ -32,6 +32,7 @@ export class MemberCardComponent implements OnInit {
     this.onDataChange.emit(this.selected);
   }
   deleteCalled(){
+    console.log("onDelete");
     this.onDelete.emit();
   }
 }

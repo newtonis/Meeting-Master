@@ -170,7 +170,11 @@ h3 {
   text-align: center;
   vertical-align: middle;
 }
-.mat-success {
-  background-color: #9ccc65;
+.mat-success-red {
+  background-color: #ef5350 ;
+  color: #fff;
+}
+.mat-success-green {
+  background-color: #aed581 ;
   color: #fff;
 }
