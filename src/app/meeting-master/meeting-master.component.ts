@@ -4,6 +4,8 @@ import { PeopleTimetableManagerService } from '../people-timetable-manager.servi
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Person, Timeblock, intersectTimeblock } from '../materia';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { DeleteItemComponent, DialogData } from '../delete-item/delete-item.component';
 
 @Component({
   selector: 'app-meeting-master',
@@ -22,7 +24,7 @@ export class MeetingMasterComponent implements OnInit {
   
   userByName: {[name: string] : Person; } = {};
 
-  constructor(public peopleTimeTableManager: PeopleTimetableManagerService) { 
+  constructor(public peopleTimeTableManager: PeopleTimetableManagerService, public dialog: MatDialog) { 
     this.dataProvider = peopleTimeTableManager.getDataObservable();
     this.dataProvider.subscribe((data : Person[]) => {
 
@@ -47,7 +49,22 @@ export class MeetingMasterComponent implements OnInit {
   }
   removePerson(name: string){
     console.log(`remove person ${name}`);
-    this.peopleTimeTableManager.removePerson(name);
+
+    let dialogRef = this.dialog.open(DeleteItemComponent, {
+      data: {selected: false, name: name}
+    });
+    dialogRef.afterClosed().subscribe((result: DialogData) => {
+      console.log(result);
+      if (result.selected == "Si"){
+        // eliminar elemento
+        this.peopleTimeTableManager.removePerson(result.name);
+      }else{
+        // No eliminar elemento
+        
+      }
+    });
+
+    
   }
   updateCalendarContent(selected: string){
     this.selected = selected;

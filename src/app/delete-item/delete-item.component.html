@@ -1,0 +1,7 @@
+<h1 mat-dialog-title>¿Eliminar a <b>{{data.name}}</b>?</h1>
+<div fxLayoutAlign="center center" fxLayout="row">
+    <div mat-dialog-actions>
+        <button mat-button (click)="onSiClick()">Si</button>
+        <button mat-button (click)="onNoClick()" cdkFocusInitial>No</button>
+    </div>
+</div>

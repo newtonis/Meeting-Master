@@ -1,0 +1,10 @@
+.member-card{
+    margin:1px;
+    padding:30px;
+    background-color: #c8e6c9;
+    width: 150px;
+    text-align: center;
+}
+.member-card:hover{
+    background-color: #a5d6a7;
+}

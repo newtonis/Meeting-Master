@@ -12,6 +12,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { NamesManagerComponent } from './names-manager/names-manager.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+
 import { AddMemberCardComponent } from './add-member-card/add-member-card.component';
 import { MatInputModule } from '@angular/material/input';
 import { AngularFireModule } from 'angularfire2';
@@ -20,6 +22,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { firebaseConfig } from './secrets';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main/main.component';
+import { DeleteItemComponent } from './delete-item/delete-item.component';
+import { SaveButtonComponent } from './save-button/save-button.component';
 
 const routes: Routes = [
   { path: ':id', component: MainComponent}
@@ -34,6 +38,8 @@ const routes: Routes = [
     NamesManagerComponent,
     AddMemberCardComponent,
     MainComponent,
+    DeleteItemComponent,
+    SaveButtonComponent,
     
   ],
   imports: [
@@ -48,7 +54,8 @@ const routes: Routes = [
     MatTabsModule,
     MatButtonModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

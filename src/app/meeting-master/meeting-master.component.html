@@ -1,5 +1,5 @@
 <mat-tab-group mat-stretch-tabs class="tab-group" (selectedTabChange)="tabChanged($event)"> 
-    <mat-tab label="Meeting" >
+    <mat-tab label="Arma tus reuniones" >
         <div class="meeting-master" fxLayoutAlign="center center" fxLayout.lt-lg="column">
             <div [fxFlex.gt-md]="50" class="calendar-container">
                 <app-names-manager (updateSelectedItems)="updateSelectedItems($event)"  [dataProvider]="dataProvider" [oneAtATime]="false">
@@ -13,9 +13,10 @@
             </div>
         </div>
     </mat-tab>
-    <mat-tab label="Update">
+    <mat-tab label="Carga tu horario">
         <div class="meeting-master" fxLayoutAlign="center center" fxLayout.lt-lg="column">
             <div [fxFlex.gt-md]="50" class="calendar-container">
+                
                 <app-names-manager (newSelectedItem)="updateCalendarContent($event)" (addCalled)="addPerson($event)" (deleteCalled)="removePerson($event)" [dataProvider]="dataProvider" [allowAdd]="true" [oneAtATime]="true">
 
                 </app-names-manager>
